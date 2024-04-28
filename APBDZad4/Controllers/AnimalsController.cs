@@ -21,7 +21,7 @@ public class AnimalsController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public IActionResult GetAnimalById(int id)
+    public IActionResult GetAnimal(int id)
     {
         var animal = Animals.FirstOrDefault(a => a.IdAnimal == id);
         if (animal == null) return NotFound($"Nie znaleziono zwierzęcia o podanym id: {id}");
@@ -36,13 +36,23 @@ public class AnimalsController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    public IActionResult UpdateStudentById(int id, Animal animal)
+    public IActionResult UpdateAnimal(int id, Animal animal)
     {
         var animalToUpdate = Animals.FirstOrDefault(a => a.IdAnimal == id);
         if (animalToUpdate == null) return NotFound($"Nie znaleziono zwierzęcia o podanym id: {id}");
         Animals.Remove(animalToUpdate);
         Animals.Add(animal);
 
+        return NoContent();
+    }
+
+    [HttpDelete("id:int")]
+    public IActionResult DeleteAnimal(int id)
+    {
+        var animal = Animals.FirstOrDefault(a => a.IdAnimal == id);
+        if (animal == null) return NotFound($"Nie znaleziono zwierzęcia o podanym id: {id}");
+
+        Animals.Remove(animal);
         return NoContent();
     }
 }
